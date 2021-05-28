@@ -1,175 +1,239 @@
-const byId = id => document.getElementById(id)
+const startSim = () => {
+    const byId = id => document.getElementById(id)
+    const WIDTH = 700
 
-const eingrenzen = (min, max, x) => {
-    return Math.min(max, Math.max(min, x))
-}
+    const infectionRate = byId("infectionRate").value;
+    const percentDistancing = byId("percentDistancing").value;
+    const powerDistancing = byId("powerDistancing").value;
+    const mortality = byId("mortality").value;
 
-const susceptibleColor = "#3076b3";
-const infectedColor = "#b33030";
-const recoveredColor = "#36ad38";
-const deadColor = "#04090d";
+    console.log("infectionRate: ");
+    console.log(infectionRate);
+    console.log("percentDistancing: ");
+    console.log(percentDistancing);
+    console.log("powerDistancing: ");
+    console.log(powerDistancing);
+    console.log("mortality: ");
+    console.log(mortality);
 
-// generiert 2 normalverteile zufallszahlen
-const box_muller = () => {
-    const u1 = Math.random()
-    const u2 = Math.random()
+    const eingrenzen = (min, max, x) => {
+      return Math.min(max, Math.max(min, x))
+    }
 
-    const z1 = Math.sqrt(-2. * Math.log(u1)) * Math.cos(2 * Math.PI * u2)
-    const z2 = Math.sqrt(-2. * Math.log(u1)) * Math.sin(2 * Math.PI * u2)
+    // generiert 2 normalverteile zufallszahlen
+    const box_muller = () => {
+        const u1 = Math.random()
+        const u2 = Math.random()
 
-    return [z1, z2]
-}
+        const z1 = Math.sqrt(-2. * Math.log(u1)) * Math.cos(2 * Math.PI * u2)
+        const z2 = Math.sqrt(-2. * Math.log(u1)) * Math.sin(2 * Math.PI * u2)
 
-class Blobmensch {
-    constructor(x, y) {
+        return [z1, z2]
+    }
+
+    class Vec2 {
+      constructor(x, y) {
         this.x = x
         this.y = y
-        this.vx = 0
-        this.vy = 0 // Math.random() * 2 * Math.PI
-        this.z1 = 0
-        this.z2 = 0
-        this.normal = true;
-        this.infected = false;
-        this.recovered = false;
-        this.dead = false;
-        this.daysInfected = 0;
+      }
+
+      static fromPolar(r, phi) {
+        const x = r * Math.cos(phi)
+        const y = r * Math.sin(phi)
+        return new Vec2(x, y)
+      }
+
+      distance(that) {
+        const dx = this.x - that.x
+        const dy = this.y - that.y
+        return Math.sqrt(dx * dx + dy * dy)
+      }
+
+      smul(n) {
+        return new Vec2(n * this.x, n * this.y)
+      }
+
+      dot(that) {
+        return new Vec2(this.x * that.x, this.y * that.y)
+      }
+
+      sadd(n) {
+        return new Vec2(this.x + n, this.y + n)
+      }
+
+      add(that) {
+        return new Vec2(this.x + that.x, this.y + that.y)
+      }
+
+      zero() {
+        return this.x == 0 && this.y == 0
+      }
+
+      limit(max) {
+        const m = this.distance(new Vec2(0, 0))
+        return this.smul(Math.min(1.0, max / m))
+      }
+
+      pointAwayFrom(that) {
+        const dx = this.x - that.x
+        const dy = this.y - that.y
+        const r = Math.sqrt(dx * dx + dy * dy)
+        return new Vec2(dx / r, dy / r)
+      }
+
+      abs() {
+        const dx = this.x
+        const dy = this.y
+        const r = Math.sqrt(dx * dx + dy * dy)
+        return r
+      }
     }
+
+    class Blobmensch {
+      constructor(x, y) {
+        this.r = new Vec2(x, y)
+        this.v = Vec2.fromPolar(0.1, Math.random() * 2 * Math.PI)
+
+        this.state = "normal"
+        this.distancing = getRandomInt(0,100) < percentDistancing;
+      }
     /*
       step(dt) {
         this.v0 = Math.max(0, Math.min(1, this.v0 + 0.01 * (Math.random() - 0.5)))
         this.vphi = (2 * Math.PI + this.vphi + 0.5 * (Math.random() - 0.5)) % (2 * Math.PI)
-    
+
         const vx = this.v0 * Math.cos(this.vphi)
         const vy = this.v0 * Math.sin(this.vphi)
-    
+
         this.x = Math.min(500, Math.max(0, this.x + dt * vx))
         this.y = Math.min(500, Math.max(0, this.y + dt * vy))
       }
       */
-    step(dt, blobs) {
-        const [z1, z2] = box_muller()
+      step(t, dt, blobs) {
+        if (this.state !== "dead") {
 
-        if ((this.vy === 0 && this.vx === 0) || touched(this, blobs)) {
-            this.z1 = z1;
-            this.z2 = z2;
-        }
-        recoverOrDie(this);
+          // abstand zu rändern
+          let Fx = 0.0
+          let Fy = 0.0
 
-        this.vx = 0.055 * this.z1 * dt
-        this.vy = 0.055 * this.z2 * dt
+          if (this.r.x < 20) {
+            let d = this.r.x
+            Fx += 1.0 / (d * d)
+          }
+          if (this.r.x > (WIDTH - 20)) {
+            let d = WIDTH - this.r.x
+            Fx += -1.0 / (d * d)
+          }
 
-        this.x = eingrenzen(0, 1920, this.x + this.vx)
-        this.y = eingrenzen(0, 1080, this.y + this.vy)
+          if (this.r.y < 20) {
+            let d = this.r.y
+            Fy += 1.0 / (d * d)
+          }
+          if (this.r.y > (WIDTH - 20)) {
+            let d = WIDTH - this.r.y
+            Fy += -1.0 / (d * d)
+          }
 
-    }
-}
+          const otherBlobs = blobs.filter(b => b !== this && b.state !== "dead")
 
-const distance_between = (x1, y1, x2, y2) => {
-    var a = x1 - x2;
-    var b = y1 - y2;
-
-    return Math.sqrt(a + b);
-}
-
-const touched = (blob, blobs) => {
-    if (blob.x < 1 || blob.x > 1919) {
-        return true;
-    }
-    if (blob.y < 1 || blob.y > 1079) {
-        return true;
-    }
-    for (blob2 of blobs) {
-        if (blob === blob2) {
-            continue;
-        }
-        if (distance_between(blob.x, blob.y, blob2.x, blob2.y) < 0.5) {
-            if (blob2.infected && infect(blob)) {
-                blob.normal = false;
-                blob.infected = true;
-            } else if (blob.infected && infect(blob2)) {
-                blob2.normal = false;
-                blob2.infected = true;
+          // abstand zu anderen blobs
+          for (let that of otherBlobs) {
+            const d = this.r.distance(that.r)
+            if (d < 70 && this.distancing) {
+              const away = this.r.pointAwayFrom(that.r)
+              const distancingPower = 10 / powerDistancing;
+              Fx += away.x * distancingPower / (d * d)
+              Fy += away.y * distancingPower / (d * d)
             }
-            return true;
+
+            if (d < 20 && this.state === "normal" && that.state === "infected") {
+              // infektion?
+              if (getRandomInt(0,100) <= infectionRate) {
+                this.state = "infected"
+                this.infectedAt = t
+              }
+            }
+          }
+
+          if (this.state === "infected" && (this.infectedAt + 5000) < t) {
+            if (getRandomInt(0,100) <= mortality) {
+              this.state = "dead"
+              this.v = new Vec2(0.0, 0.0)
+            } else {
+              this.state = "removed"
+            }
+          } else {
+            let a = (new Vec2(Fx, Fy)).limit(0.1)
+
+            if (!a.zero()) {
+              this.v = this.v.add(a.smul(dt)).limit(0.1)
+            }
+          }
+
+          const x = eingrenzen(1, WIDTH - 1, this.r.x + dt * this.v.x)
+          const y = eingrenzen(1, WIDTH - 1, this.r.y + dt * this.v.y)
+          this.r = new Vec2(x, y)
         }
-    }
-    return false;
-}
-const render = (blobs) => {
-    const canvas = byId("c")
-    const ctx = canvas.getContext("2d")
+      }
 
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(-1, -1, 1921, 1081)
 
-    for (blob of blobs) {
-        ctx.fillStyle = getColor(blob)
+
+      draw(ctx) {
+        ctx.fillStyle = this.state === "normal" ? "#0000aa" : (this.state === "infected" ? "#990000" : (this.state === "dead" ? "#000000" : "#009900"))
         ctx.beginPath()
-        ctx.arc(blob.x, blob.y, 6, 0, 2 * Math.PI)
+        ctx.arc(blob.r.x, blob.r.y, 5, 0, 2 * Math.PI)
         ctx.fill()
-    }
-}
-
-let t0 = null
-
-const step = (t) => {
-    if (!t0) t0 = t
-
-    const dt = 0.9 * (t - t0)
-    t0 = t
-
-    for (blob of blobs) {
-        blob.step(dt, blobs)
+      }
     }
 
-    render(blobs)
+
+    const render = (blobs) => {
+      const canvas = byId("c")
+      const ctx = canvas.getContext("2d")
+
+      ctx.fillStyle = "#ffffff"
+      ctx.fillRect(-1, -1, WIDTH + 2, WIDTH + 2)
+
+      for (blob of blobs) {
+        blob.draw(ctx)
+      }
+    }
+
+    let t0 = null
+
+    const step = (t) => {
+      if (!t0) t0 = t
+
+      const dt = 0.9 * (t - t0)
+      if (dt <= 0) {
+        window.requestAnimationFrame(step)
+        return
+      }
+      t0 = t
+
+      for (blob of blobs) {
+        blob.step(t, 20, blobs)
+      }
+
+      render(blobs)
+
+      window.requestAnimationFrame(step)
+    }
+
+    const blobs = []
+    for (let i = 0; i < 100; i++) {
+      const b = new Blobmensch(Math.random() * (WIDTH - 100) + 50, Math.random() * (WIDTH - 100) + 50)
+      blobs.push(b)
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    blobs[0].state = "infected"
+    blobs[0].infectedAt = (new Date()).getTime()
 
     window.requestAnimationFrame(step)
 }
-
-const recoverOrDie = (blob) => {
-    if(blob.recovered || blob.dead) return;
-
-    //recover
-    if (blob.infected && blob.daysInfected < 400) {
-        blob.daysInfected++;
-    } else if (blob.infected) {
-        blob.infected = false;
-        blob.recovered = true;
-    }
-
-    //die
-    const u1 = Math.random() * 100;
-    if(blob.infected && u1 <= 0.01){
-        blob.infected = false;
-        blob.dead = true;
-    }
-
-}
-
-const infect = (blob) => {
-    if(!blob.normal) return false
-    const u1 = Math.random();
-    return u1 <= 0.1
-}
-
-
-const getColor = (blob) => {
-    if (blob.infected) return infectedColor
-    else if (blob.dead) return deadColor
-    else if (blob.recovered) return recoveredColor
-    else return susceptibleColor
-}
-
-const blobs = []
-for (let i = 0; i < 499; i++) {
-    const b = new Blobmensch(Math.random() * 1920, Math.random() * 1080)
-    blobs.push(b)
-}
-
-const b1 = new Blobmensch(Math.random() * 1920, Math.random() * 1080)
-b1.color = infectedColor
-b1.infected = true
-blobs.push(b1)
-
-window.requestAnimationFrame(step)
