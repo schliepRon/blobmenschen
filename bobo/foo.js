@@ -233,3 +233,7 @@ const startSim = () => {
 
     window.requestAnimationFrame(step)
 }
+
+const startPlot = () => {
+
+}
