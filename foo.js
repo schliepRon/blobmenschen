@@ -6,15 +6,24 @@ const startSim = () => {
     const percentDistancing = byId("percentDistancing").value;
     const powerDistancing = byId("powerDistancing").value;
     const mortality = byId("mortality").value;
+    const infectionDistance = byId("infectionDistance").value;
+    const blobCount = byId("blobCount").value;
+    const timeAfterInfectionEvent = byId("timeAfterInfectionEvent").value;
 
+    console.log("blobCount: ");
+    console.log(blobCount);
     console.log("infectionRate: ");
     console.log(infectionRate);
+    console.log("infectionDistance: ");
+    console.log(infectionDistance);
     console.log("percentDistancing: ");
     console.log(percentDistancing);
     console.log("powerDistancing: ");
     console.log(powerDistancing);
     console.log("mortality: ");
     console.log(mortality);
+    console.log("timeAfterInfectionEvent: ");
+    console.log(timeAfterInfectionEvent);
 
     const eingrenzen = (min, max, x) => {
       return Math.min(max, Math.max(min, x))
@@ -97,18 +106,7 @@ const startSim = () => {
         this.state = "normal"
         this.distancing = getRandomInt(0,100) < percentDistancing;
       }
-    /*
-      step(dt) {
-        this.v0 = Math.max(0, Math.min(1, this.v0 + 0.01 * (Math.random() - 0.5)))
-        this.vphi = (2 * Math.PI + this.vphi + 0.5 * (Math.random() - 0.5)) % (2 * Math.PI)
 
-        const vx = this.v0 * Math.cos(this.vphi)
-        const vy = this.v0 * Math.sin(this.vphi)
-
-        this.x = Math.min(500, Math.max(0, this.x + dt * vx))
-        this.y = Math.min(500, Math.max(0, this.y + dt * vy))
-      }
-      */
       step(t, dt, blobs) {
         if (this.state !== "dead") {
 
@@ -141,12 +139,12 @@ const startSim = () => {
             const d = this.r.distance(that.r)
             if (d < 70 && this.distancing) {
               const away = this.r.pointAwayFrom(that.r)
-              const distancingPower = 10 / powerDistancing;
+              const distancingPower = powerDistancing * powerDistancing / 4000;
               Fx += away.x * distancingPower / (d * d)
               Fy += away.y * distancingPower / (d * d)
             }
 
-            if (d < 20 && this.state === "normal" && that.state === "infected") {
+            if (d < infectionDistance && this.state === "normal" && that.state === "infected") {
               // infektion?
               if (getRandomInt(0,100) <= infectionRate) {
                 this.state = "infected"
@@ -155,7 +153,7 @@ const startSim = () => {
             }
           }
 
-          if (this.state === "infected" && (this.infectedAt + 5000) < t) {
+          if (this.state === "infected" && (this.infectedAt + timeAfterInfectionEvent) < t) {
             if (getRandomInt(0,100) <= mortality) {
               this.state = "dead"
               this.v = new Vec2(0.0, 0.0)
@@ -221,7 +219,7 @@ const startSim = () => {
     }
 
     const blobs = []
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < blobCount; i++) {
       const b = new Blobmensch(Math.random() * (WIDTH - 100) + 50, Math.random() * (WIDTH - 100) + 50)
       blobs.push(b)
     }
@@ -234,6 +232,7 @@ const startSim = () => {
 
     blobs[0].state = "infected"
     blobs[0].infectedAt = (new Date()).getTime()
+    blobs[0].distancing = false;
 
     window.requestAnimationFrame(step)
 }
