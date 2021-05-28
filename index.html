@@ -21,11 +21,22 @@
         <canvas id="c" width="700" height="700"></canvas>
     </div>
     <div class="menu-bar">
-        <div>InfectionRate<input type="range" min="1" max="100" value="80" class="slider" id="infectionRate"></div>
-        <div>PercentDistancing<input type="range" min="1" max="100" value="80" class="slider" id="percentDistancing"></div>
-        <div>PowerDistancing<input type="range" min="1" max="100" value="50" class="slider" id="powerDistancing"></div>
-        <div>Mortality<input type="range" min="1" max="100" value="10" class="slider" id="mortality"></div>
-        <div><input class="button" id="clickMe" type="button" value="Start Simulation" onclick="startSim();"/></div>
+        <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider"
+                id="blobCount"></div>
+        <div class="menu-element">InfectionRate<input type="range" min="1" max="100" value="80" class="slider"
+                id="infectionRate"></div>
+        <div class="menu-element">InfectionDistance<input type="range" min="1" max="100" value="80" class="slider"
+                id="infectionDistance"></div>
+        <div class="menu-element">PercentDistancing<input type="range" min="1" max="100" value="80" class="slider"
+                id="percentDistancing"></div>
+        <div class="menu-element">PowerDistancing<input type="range" min="1" max="100" value="50" class="slider"
+                id="powerDistancing"></div>
+        <div class="menu-element">Time after Infection for Event (Dead / Recovered)<input type="range" min="1" max="100"
+                value="80" class="slider" id="timeAfterInfectionEvent"></div>
+        <div class="menu-element">Mortality<input type="range" min="1" max="100" value="10" class="slider"
+                id="mortality"></div>
+        <div class="menu-element"><input class="button" id="clickMe" type="button" value="Start Simulation"
+                onclick="startSim();" /></div>
     </div>
 </body>
 
