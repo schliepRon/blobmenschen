@@ -98,6 +98,12 @@ const startSim = () => {
       }
     }
 
+    function addDays(date, days) {
+      var result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
     class Blobmensch {
       constructor(x, y) {
         this.r = new Vec2(x, y)
@@ -153,7 +159,9 @@ const startSim = () => {
             }
           }
 
-          if (this.state === "infected" && (this.infectedAt + timeAfterInfectionEvent) < t) {
+
+
+          if (this.state === "infected" && (addDays(new Date(this.infectedAt), timeAfterInfectionEvent)) < t) {
             if (getRandomInt(0,100) <= mortality) {
               this.state = "dead"
               this.v = new Vec2(0.0, 0.0)
