@@ -8,7 +8,6 @@ const startSim = () => {
     const mortality = byId("mortality").value;
     const infectionDistance = byId("infectionDistance").value;
     const blobCount = byId("blobCount").value;
-    const timeAfterInfectionEvent = byId("timeAfterInfectionEvent").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -22,8 +21,6 @@ const startSim = () => {
     console.log(powerDistancing);
     console.log("mortality: ");
     console.log(mortality);
-    console.log("timeAfterInfectionEvent: ");
-    console.log(timeAfterInfectionEvent);
 
     const eingrenzen = (min, max, x) => {
       return Math.min(max, Math.max(min, x))
@@ -98,12 +95,6 @@ const startSim = () => {
       }
     }
 
-    function addDays(date, days) {
-      var result = new Date(date);
-      result.setDate(result.getDate() + days);
-      return result;
-    }
-
     class Blobmensch {
       constructor(x, y) {
         this.r = new Vec2(x, y)
@@ -159,9 +150,7 @@ const startSim = () => {
             }
           }
 
-
-
-          if (this.state === "infected" && (addDays(new Date(this.infectedAt), timeAfterInfectionEvent)) < t) {
+          if (this.state === "infected" && (this.infectedAt + 5000) < t) {
             if (getRandomInt(0,100) <= mortality) {
               this.state = "dead"
               this.v = new Vec2(0.0, 0.0)
@@ -240,7 +229,7 @@ const startSim = () => {
 
     blobs[0].state = "infected"
     blobs[0].infectedAt = (new Date()).getTime()
-    blobs[0].distancing = false;
+    blobs[0].distincing = false
 
     window.requestAnimationFrame(step)
 }
