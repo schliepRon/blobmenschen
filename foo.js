@@ -26,6 +26,7 @@ class Blobmensch {
         this.normal = true;
         this.infected = false;
         this.removed = false;
+        this.color = "#123456";
     }
     /*
       step(dt) {
@@ -60,7 +61,7 @@ const distance_between = (x1, y1, x2, y2) => {
     var a = x1 - x2;
     var b = y1 - y2;
 
-    return Math.sqrt(aa + bb);
+    return Math.sqrt(a + b);
 }
 
 const touched = (blob, blobs) => {
@@ -69,6 +70,18 @@ const touched = (blob, blobs) => {
     }
     if (blob.y < 1 || blob.y > 499) {
         return true;
+    }
+    for (blob2 of blobs) {
+        if (blob === blob2) {
+            continue;
+        }
+        if (distance_between(blob.x, blob.y, blob2.x, blob2.y) < 0.2) {
+            if (true) {
+                blob.color = "#b33030"
+                blob.infected = true
+            }
+            return true;
+        }
     }
     return false;
 }
@@ -81,8 +94,8 @@ const render = (blobs) => {
     ctx.fillStyle = "#ffffff"
     ctx.fillRect(-1, -1, 502, 502)
 
-    ctx.fillStyle = "#123456"
     for (blob of blobs) {
+        ctx.fillStyle = blob.color
         ctx.beginPath()
         ctx.arc(blob.x, blob.y, 5, 0, 2 * Math.PI)
         ctx.fill()
