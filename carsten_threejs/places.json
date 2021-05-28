@@ -1,0 +1,13 @@
+{
+  "hospital": {
+    "mortality": 0.3
+  },
+  "supermarket": {
+    "percentDistancing": 0.3
+    "powerDistancing": 0.3
+  },
+  "workplace": {
+  },
+  "school": {
+  }
+}
