@@ -6,6 +6,7 @@ import { byId } from "./util.js"
 
 
 const blobs = [];
+const history = [];
 
 const startSim = (config, empty = false, color = "#ffffff") => {
   console.log(config);
@@ -68,7 +69,7 @@ const startSim = (config, empty = false, color = "#ffffff") => {
   renderer.run(step);
 }
 
-const startSimEmpty = (config) => startSim(config, true, "#cccccc")
+const startSimEmpty = (config) => startSim(config, true, "#ffffff")
 
 const startPlot = () => {
     const WIDTH = 700
@@ -90,6 +91,133 @@ const statistics = (t) => {
 
   const statUI = new StatUI();
   statUI.printStats(blobs);
+
+    history.push([
+        blobs.filter(b => b.state == "normal").length,
+        blobs.filter(b => b.state == "infected").length,
+        blobs.filter(b => b.state == "removed").length,
+        blobs.filter(b => b.state == "dead").length])
+
+
+    var element = document.getElementById("plot_1")
+    var context = element.getContext("2d")
+    context.clearRect(0, 0, element.width, element.height);
+    context.strokeStyle = "#000000"
+    context.beginPath()
+    context.moveTo(0, history[0][0] / blobs.length * element.height)
+    for (let datasir of history.filter(b => b.currentColony == '1')) {
+        context.lineTo( history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+        context.moveTo(history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+    }
+    context.stroke()
+    context.strokeStyle = "#7a0f00"
+    context.beginPath()
+    context.moveTo(0, history[0][1] / blobs.length * element.height)
+    for (let datasir of history.filter(b => b.currentColony == '1')) {
+        context.lineTo( history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+        context.moveTo(history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+    }
+    context.stroke()
+    context.beginPath()
+    context.strokeStyle = "#06a"
+    context.moveTo(0, history[0][2] / blobs.length * element.height)
+    for (let datasir of history.filter(b => b.currentColony == '1')) {
+        context.lineTo( history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+        context.moveTo(history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+    }
+    context.stroke()
+    context.beginPath()
+    context.strokeStyle = "#f1a"
+    context.moveTo(0, history[0][3] / blobs.length * element.height)
+    for (let datasir of history.filter(b => b.currentColony == '1')) {
+        context.lineTo( history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+        context.moveTo(history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+    }
+    context.stroke()
+
+
+
+
+     var element = document.getElementById("plot_2")
+
+    context.clearRect(0, 0, element.width, element.height);
+        var context = element.getContext("2d")
+        context.strokeStyle = "#000000"
+        context.beginPath()
+        context.moveTo(0, history[0][0] / blobs.length * element.height)
+        for (let datasir of history.filter(b => b.currentColony == '2')) {
+            context.lineTo( history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+            context.moveTo(history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+        }
+        context.stroke()
+        context.strokeStyle = "#7a0f00"
+        context.beginPath()
+        context.moveTo(0, history[0][1] / blobs.length * element.height)
+        for (let datasir of history.filter(b => b.currentColony == '2')) {
+            context.lineTo( history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+            context.moveTo(history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+        }
+        context.stroke()
+        context.beginPath()
+        context.strokeStyle = "#06a"
+        context.moveTo(0, history[0][2] / blobs.length * element.height)
+        for (let datasir of history.filter(b => b.currentColony == '2')) {
+            context.lineTo( history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+            context.moveTo(history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+        }
+        context.stroke()
+        context.beginPath()
+        context.strokeStyle = "#f1a"
+        context.moveTo(0, history[0][3] / blobs.length * element.height)
+        for (let datasir of history.filter(b => b.currentColony == '2')) {
+            context.lineTo( history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+            context.moveTo(history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+        }
+        context.stroke()
+
+
+
+            var element = document.getElementById("plot_3")
+            var context = element.getContext("2d")
+            context.clearRect(0, 0, element.width, element.height);
+            context.strokeStyle = "#000000"
+            context.beginPath()
+            context.moveTo(0, history[0][0] / blobs.length * element.height)
+            for (let datasir of history.filter(b => b.currentColony == '3')) {
+                context.lineTo( history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+                context.moveTo(history.indexOf(datasir), datasir[0] / blobs.length * element.height)
+            }
+            context.stroke()
+            context.strokeStyle = "#7a0f00"
+            context.beginPath()
+            context.moveTo(0, history[0][1] / blobs.length * element.height)
+            for (let datasir of history.filter(b => b.currentColony == '3')) {
+                context.lineTo( history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+                context.moveTo(history.indexOf(datasir), datasir[1] / blobs.length * element.height)
+            }
+            context.stroke()
+            context.beginPath()
+            context.strokeStyle = "#06a"
+            context.moveTo(0, history[0][2] / blobs.length * element.height)
+            for (let datasir of history.filter(b => b.currentColony == '3')) {
+                context.lineTo( history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+                context.moveTo(history.indexOf(datasir), datasir[2] / blobs.length * element.height)
+            }
+            context.stroke()
+            context.beginPath()
+            context.strokeStyle = "#f1a"
+            context.moveTo(0, history[0][3] / blobs.length * element.height)
+            for (let datasir of history.filter(b => b.currentColony == '3')) {
+                context.lineTo( history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+                context.moveTo(history.indexOf(datasir), datasir[3] / blobs.length * element.height)
+            }
+            context.stroke()
+
+    while(history.length > element.width) {
+        history.shift()
+    }
+
+
 
   window.requestAnimationFrame(statistics)
 }

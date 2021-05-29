@@ -21,10 +21,7 @@
 
 <canvas id="1" width="700" height="700"></canvas>
 <canvas id="2" width="700" height="700"></canvas>
-<canvas id="3" width="50" height="50"></canvas>
-<canvas id="4" width="200" height="200"></canvas>
-<canvas id="5" width="50" height="50"></canvas>
-<canvas id="6" width="50" height="50"></canvas>
+<canvas id="3" width="200" height="200"></canvas>
 </div>
 <div class="stats-bar-background">
     <div class="stats-bar">
@@ -50,7 +47,7 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="1_count"></div>
             </div>
-            <canvas class="stats-plot"></canvas>
+            <canvas class="stats-plot" id="plot_1"></canvas>
         </div>
         <div class="stats-element">
             <div class="stats-header" id="2_header"></div>
@@ -74,7 +71,7 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="2_count"></div>
             </div>
-            <canvas class="stats-plot"></canvas>
+            <canvas class="stats-plot" id="plot_2"></canvas>
         </div>
         <div class="stats-element">
             <div class="stats-header" id="3_header"></div>
@@ -98,7 +95,7 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="3_count"></div>
             </div>
-            <canvas class="stats-plot"></canvas>
+            <canvas class="stats-plot" id="plot_3"></canvas>
         </div>
     </div>
 </div>
@@ -108,10 +105,7 @@
         <div class="menu-element"></div>
         <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});
                                                                                                                         startSim({'id':'2','size':'700'});
-                                                                                                                        startSimEmpty({'id':'3','size':'50'});
-                                                                                                                        startSimEmpty({'id':'4','size':'200'});
-                                                                                                                        startSimEmpty({'id':'5','size':'50'});
-                                                                                                                        startSimEmpty({'id':'6','size':'50'});
+                                                                                                                        startSimEmpty({'id':'3','size':'200'});
 "/></div>
         <div class="menu-element"><input class="button" id="plotSim" type="button" value="Start Plot" onclick="startPlot();"/></div>
         <div class="menu-element"></div>
