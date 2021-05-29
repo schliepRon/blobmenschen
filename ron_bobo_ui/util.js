@@ -10,3 +10,11 @@ export const eingrenzen = (min, max, x) => {
 }
 
 export const byId = id => document.getElementById(id)
+
+export const worldBounds = (colonies) => {
+  const xmin = Math.min(...colonies.map(c => c.x))
+  const xmax = Math.max(...colonies.map(c => c.x + c.size))
+  const ymin = Math.min(...colonies.map(c => c.y))
+  const ymax = Math.max(...colonies.map(c => c.y + c.size))
+  return [xmin, xmax, ymin, ymax]
+}

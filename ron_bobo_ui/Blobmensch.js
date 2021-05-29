@@ -3,22 +3,24 @@ import { getRandomInt, eingrenzen } from "./util.js"
 
 
 class Blobmensch {
-  constructor(x, y, id, params) {
+  constructor(x, y, id, params, colonies, idx) {
     this.r = new Vec2(x, y)
     this.v = Vec2.fromPolar(0.1, Math.random() * 2 * Math.PI)
     this.params = params;
+    this.idx = idx
 
     this.state = "normal"
     this.distancing = getRandomInt(0,100) < this.params.percentDistancing;
     this.homeColony = id;
     this.currentColony = id;
+    this.size = colonies.find(c => c.name === this.currentColony).size;
+    this.colonies = colonies;
   }
 
   step(t, dt, blobs, renderer) {
     if (this.state !== "dead") {
 
-    var size = window.colony[this.currentColony].size;
-
+      let size = this.size;
       // abstand zu rändern
       let Fx = 0.0
       let Fy = 0.0
@@ -83,27 +85,18 @@ class Blobmensch {
       }
 
       if(getRandomInt(0, 1000000) < this.params.travelChance) {
-        if(this.currentColony == '1') {
-            const newColony = 1 + getRandomInt(1,2);
-            console.log("blob traveled from 1 to " + newColony);
-            console.log(this);
-            this.currentColony = '' + newColony;
-        } else if(this.currentColony == '2'){
-            const newColony = getRandomInt(1,2) == 1 ? 1 : 3;
-            console.log("blob traveled from 2 to " + newColony);
-            console.log(this);
-            this.currentColony = '' + newColony;
-        } else if(this.currentColony == '3'){
-            const newColony = getRandomInt(1,2);
-            console.log("blob traveled from 2 to " + newColony);
-            console.log(this);
-            this.currentColony = '' + newColony;
+        const otherColonies = this.colonies.filter(c => c.name !== this.currentColony)
+        if (otherColonies.length > 0) {
+          const newIdx = getRandomInt(0, otherColonies.length - 1)
+          const newCol = otherColonies[newIdx]
+          this.currentColony = newCol.name
+
+          // in der mitte der neuen kolonie spawnen
+          this.size = newCol.size
+          size = this.size
+          this.r.x = size / 2;
+          this.r.y = size / 2;
         }
-
-        size = window.colony[this.currentColony].size;
-
-        this.r.x = size / 2;
-        this.r.y = size / 2;
       }
 
       if(this.state === "removed" && (this.infectedAt + this.params.sicknessDuration * 1000) < t) {

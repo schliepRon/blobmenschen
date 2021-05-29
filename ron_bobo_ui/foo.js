@@ -2,80 +2,141 @@ import Blobmensch from "./Blobmensch.js"
 import Params from "./Params.js"
 import StatUI from "./StatUI.js"
 import CanvasRenderer from "./CanvasRenderer.js"
-import { byId } from "./util.js"
+import ThreejsRenderer from "./TheejsRenderer.js"
+import { byId, getRandomInt } from "./util.js"
 
 
-const blobs = [];
-const history = [];
+const TOTAL_HEIGHT = window.innerHeight - 150
+const TOTAL_WIDTH = window.innerWidth - 400
+byId("container").style.height = "" + TOTAL_HEIGHT + "px"
+byId("container").style.width = "" + TOTAL_WIDTH + "px"
 
-const startSim = (config, empty = false, color = "#ffffff") => {
-  console.log(config);
-  var id = config['id'];
 
-  const params = Params.fromSliders()
-  params.width = config['size'];
-
-  if (empty) {
-    params.blobCount = 0;
-  }
-
-  if(window.colony == null) {
-    window.colony = [];
-  }
-
-  window.colony[id] = config;
-
-  params.logValues()
-
-  const renderer = new CanvasRenderer({
-    elRef: byId(id),
-    width: params.width,
-    height: params.width,
-    bgcolor: color
-  })
-
-  let t0 = null
-
-  const step = (t, renderer) => {
-    if (!t0) {
-      t0 = t
-      if (!empty) {
-        blobs[0].state = "infected"
-        blobs[0].infectedAt = t
-        blobs[0].distincing = false
-      }
+const sims = {
+  "einfach": [
+    {
+      name: "1",
+      size: 700,
+      x: 0,
+      y: 0,
+      empty: false,
+      bgcolor: "#ffffff"
     }
+  ],
+  "komplex": [
+   {
+      name: "1",
+      size: 500,
+      x: 0,
+      y: 0,
+      empty: false,
+      bgcolor: "#ffffff"
+    }, {
+      name: "2",
+      size: 500,
+      x: 550,
+      y: 0,
+      empty: false,
+      bgcolor: "#ffffff"
+    }, {
+      name: "3",
+      size: 120,
+      x: 1100,
+      y: 300,
+      empty: true,
+      bgcolor: "#cccccc"
+    } 
+  ]
+}
+let blobs = [];
 
-    const dt = (t - t0)
-    if (dt <= 0) {
-      return []
-    }
-    t0 = t
+let renderer = null
 
-    const myColonyBlobs = blobs.filter(e => e.currentColony == id)
 
-    for (const blob of myColonyBlobs) {
-      blob.step(t, 20, myColonyBlobs, renderer)
-    }
-
-    return myColonyBlobs
+byId("toggleView").onclick = () => {
+  if (renderer) {
+    renderer.toggleView()
   }
-
-  for (let i = 0; i < params.blobCount; i++) {
-    const b = new Blobmensch(Math.random() * (params.width - 100) + 50, Math.random() * (params.width - 100) + 50, id, params)
-    blobs.push(b)
-  }
-
-  renderer.run(step);
 }
 
-const startSimEmpty = (config) => startSim(config, true, "#ffffff")
+const startSim = (elementId, config) => {
+  const colonies = sims[config];
+
+  const params = Params.fromSliders()
+
+  blobs = [];
+
+  const container = byId(elementId)
+
+  if (renderer) {
+    renderer.stop()
+  }
+
+  renderer = new ThreejsRenderer({
+    colonies: colonies,
+    width: TOTAL_WIDTH,
+    height: TOTAL_HEIGHT
+  })
+
+  while (container.firstChild) {
+    container.removeChild(container.lastChild)
+  }
+  container.appendChild(renderer.domElement)
+
+  const stepFns = []
+  for (const colony of colonies) {
+    const nblobs = colony.empty ? 0 : params.blobCount
+    const colonyName = colony.name
+
+    let t0 = null
+
+    const step = (t, renderer) => {
+      if (!t0) {
+        t0 = t
+        if (!colony.empty) {
+          blobs[0].state = "infected"
+          blobs[0].infectedAt = t
+          blobs[0].distincing = false
+          renderer.onStateChange(blobs[0])
+        }
+      }
+
+      const dt = (t - t0)
+      if (dt <= 0) {
+        return []
+      }
+      t0 = t
+
+      const myColonyBlobs = blobs.filter(e => e.currentColony == colonyName)
+
+      for (const blob of myColonyBlobs) {
+        blob.step(t, 20, myColonyBlobs, renderer)
+      }
+
+      return myColonyBlobs
+    }
+    stepFns.push(step);
+
+    for (let i = 0; i < nblobs; i++) {
+      const b = new Blobmensch(getRandomInt(50, colony.size - 50), getRandomInt(50, colony.size - 50), colonyName, params, colonies, i)
+      blobs.push(b)
+    }
+  }
+
+  renderer.init(blobs)
+
+  const combinedStepFn = (t, renderer) => [].concat(...stepFns.map(f => f(t, renderer)))
+
+  renderer.run(combinedStepFn);
+}
+
 
 const startPlot = () => {
     const WIDTH = 700
 }
 
 let t0 = null
+const history = [];
 
 const statistics = (t) => {
   if (!t0) {
@@ -225,4 +286,3 @@ const statistics = (t) => {
 window.requestAnimationFrame(statistics)
 
 window.startSim = startSim;
-window.startSimEmpty = startSimEmpty;

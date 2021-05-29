@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>Document</title>
     <style>
-        #c {
-            border: 1px solid #000;
-        }
-
+      #c {
+        border: 1px solid #000;
+      }
     </style>
-</head>
+  </head>
 
+<<<<<<< HEAD
 <body>
 <script src="./foo.js" type="module"></script>
 <div class="canvas-container">
@@ -25,102 +24,200 @@
 </div>
 <div class="stats-bar-background">
     <div class="stats-bar">
+=======
+  <body>
+    <script src="./foo.js" type="module"></script>
+    <div id="container"></div>
+    <div class="stats-bar-background">
+      <div class="stats-bar">
+>>>>>>> Umbau der Simulation, alles in einem Canvas. Plus 3d-Renderer (noch mit Kameraproblemen)
         <div class="stats-element">
-            <div class="stats-header" id="1_header"></div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Susceptible</div>
-                <div class="single-stat-element-value" id="1_normal"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Infected</div>
-                <div class="single-stat-element-value" id="1_infected"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Recovered</div>
-                <div class="single-stat-element-value" id="1_recovered"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Dead</div>
-                <div class="single-stat-element-value" id="1_dead"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Count</div>
-                <div class="single-stat-element-value" id="1_count"></div>
-            </div>
-            <canvas class="stats-plot" id="plot_1"></canvas>
+          <div class="stats-header" id="1_header"></div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Susceptible</div>
+            <div class="single-stat-element-value" id="1_normal"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Infected</div>
+            <div class="single-stat-element-value" id="1_infected"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Recovered</div>
+            <div class="single-stat-element-value" id="1_recovered"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Dead</div>
+            <div class="single-stat-element-value" id="1_dead"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Count</div>
+            <div class="single-stat-element-value" id="1_count"></div>
+          </div>
+          <canvas class="stats-plot" id="plot_1"></canvas>
         </div>
         <div class="stats-element">
-            <div class="stats-header" id="2_header"></div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Susceptible</div>
-                <div class="single-stat-element-value" id="2_normal"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Infected</div>
-                <div class="single-stat-element-value" id="2_infected"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Recovered</div>
-                <div class="single-stat-element-value" id="2_recovered"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Dead</div>
-                <div class="single-stat-element-value" id="2_dead"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Count</div>
-                <div class="single-stat-element-value" id="2_count"></div>
-            </div>
-            <canvas class="stats-plot" id="plot_2"></canvas>
+          <div class="stats-header" id="2_header"></div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Susceptible</div>
+            <div class="single-stat-element-value" id="2_normal"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Infected</div>
+            <div class="single-stat-element-value" id="2_infected"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Recovered</div>
+            <div class="single-stat-element-value" id="2_recovered"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Dead</div>
+            <div class="single-stat-element-value" id="2_dead"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Count</div>
+            <div class="single-stat-element-value" id="2_count"></div>
+          </div>
+          <canvas class="stats-plot" id="plot_2"></canvas>
         </div>
         <div class="stats-element">
-            <div class="stats-header" id="3_header"></div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Susceptible</div>
-                <div class="single-stat-element-value" id="3_normal"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Infected</div>
-                <div class="single-stat-element-value" id="3_infected"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Recovered</div>
-                <div class="single-stat-element-value" id="3_recovered"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Dead</div>
-                <div class="single-stat-element-value" id="3_dead"></div>
-            </div>
-            <div class="single-stat-element">
-                <div class="single-stat-element-header">Count</div>
-                <div class="single-stat-element-value" id="3_count"></div>
-            </div>
-            <canvas class="stats-plot" id="plot_3"></canvas>
+          <div class="stats-header" id="3_header"></div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Susceptible</div>
+            <div class="single-stat-element-value" id="3_normal"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Infected</div>
+            <div class="single-stat-element-value" id="3_infected"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Recovered</div>
+            <div class="single-stat-element-value" id="3_recovered"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Dead</div>
+            <div class="single-stat-element-value" id="3_dead"></div>
+          </div>
+          <div class="single-stat-element">
+            <div class="single-stat-element-header">Count</div>
+            <div class="single-stat-element-value" id="3_count"></div>
+          </div>
+          <canvas class="stats-plot" id="plot_3"></canvas>
         </div>
+      </div>
     </div>
-</div>
 
-<div class="menu-bar-background">
-    <div class="menu-bar">
+    <div class="menu-bar-background">
+      <div class="menu-bar">
+        <div class="menu-element">
+          <input
+            class="button"
+            id="startSim"
+            type="button"
+            value="Start Simulation"
+            onclick="startSim('container', 'einfach');"
+          />
+        </div>
+        <div class="menu-element">
+          <input
+            class="button"
+            id="startSim2"
+            type="button"
+            value="Start Simulation 2"
+            onclick="startSim('container', 'komplex');"
+          />
+        </div>
+        <div class="menu-element">
+          <input
+            class="button"
+            id="toggleView"
+            type="button"
+            value="Ansicht ändern"
+          />
+        </div>
         <div class="menu-element"></div>
-        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'500'});
-                                                                                                                        startSim({'id':'2','size':'500'});
-                                                                                                                        startSimEmpty({'id':'3','size':'200'});
-"/></div>
-        <div class="menu-element"><input class="button" id="plotSim" type="button" value="Todo: Implement" onclick="startPlot();"/></div>
-        <div class="menu-element"></div>
+        <div class="menu-element">
+          BlobCount<input
+            type="range"
+            min="1"
+            max="100"
+            value="80"
+            class="slider"
+            id="blobCount"
+          />
+        </div>
+        <div class="menu-element">
+          InfectionRate<input
+            type="range"
+            min="1"
+            max="100"
+            value="80"
+            class="slider"
+            id="infectionRate"
+          />
+        </div>
+        <div class="menu-element">
+          InfectionDistance<input
+            type="range"
+            min="1"
+            max="100"
+            value="80"
+            class="slider"
+            id="infectionDistance"
+          />
+        </div>
+        <div class="menu-element">
+          PercentDistancing<input
+            type="range"
+            min="1"
+            max="100"
+            value="80"
+            class="slider"
+            id="percentDistancing"
+          />
+        </div>
 
-        <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider" id="blobCount"></div>
-        <div class="menu-element">InfectionRate<input type="range" min="1" max="100" value="80" class="slider" id="infectionRate"></div>
-        <div class="menu-element">InfectionDistance<input type="range" min="1" max="100" value="80" class="slider" id="infectionDistance"></div>
-        <div class="menu-element">PercentDistancing<input type="range" min="1" max="100" value="80" class="slider" id="percentDistancing"></div>
-
-        <div class="menu-element">PowerDistancing<input type="range" min="1" max="100" value="50" class="slider" id="powerDistancing"></div>
-        <div class="menu-element">Mortality<input type="range" min="1" max="100" value="10" class="slider" id="mortality"></div>
-        <div class="menu-element">TravelChance<input type="range" min="0" max="1000" value="10" class="slider" id="travelChance"></div>
-        <div class="menu-element">SicknessDuration<input type="range" min="0" max="50" value="15" class="slider" id="sicknessDuration"></div>
+        <div class="menu-element">
+          PowerDistancing<input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="powerDistancing"
+          />
+        </div>
+        <div class="menu-element">
+          Mortality<input
+            type="range"
+            min="1"
+            max="100"
+            value="10"
+            class="slider"
+            id="mortality"
+          />
+        </div>
+        <div class="menu-element">
+          TravelChance<input
+            type="range"
+            min="0"
+            max="1000"
+            value="10"
+            class="slider"
+            id="travelChance"
+          />
+        </div>
+        <div class="menu-element">
+          SicknessDuration<input
+            type="range"
+            min="0"
+            max="50"
+            value="15"
+            class="slider"
+            id="sicknessDuration"
+          />
+        </div>
+      </div>
     </div>
-</div>
-<br/>
-</body>
+    <br />
+  </body>
 </html>
