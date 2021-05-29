@@ -61,7 +61,7 @@ class Blobmensch {
         }
       }
 
-      if (this.state === "infected" && (this.infectedAt + 15000) < t) {
+      if (this.state === "infected" && (this.infectedAt + sicknessDuration) < t) {
         if (getRandomInt(0,100) <= mortality) {
           this.state = "dead"
           this.v = new Vec2(0.0, 0.0)

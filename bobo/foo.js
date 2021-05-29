@@ -28,6 +28,7 @@ const startSim = (id) => {
     window.infectionDistance = byId("infectionDistance").value;
     window.blobCount = byId("blobCount").value;
     window.travelChance = byId("travelChance").value;
+    window.sicknessDuration = byId("sicknessDuration").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -43,6 +44,8 @@ const startSim = (id) => {
     console.log(mortality);
     console.log("travelChance: ");
     console.log(travelChance);
+    console.log("sicknessDuraion: ");
+    console.log(sicknessDuration);
 
     const render = (blobs) => {
       const canvas = byId(id)
@@ -103,6 +106,7 @@ const startSimEmpty = (id) => {
     window.infectionDistance = byId("infectionDistance").value;
     window.blobCount = byId("blobCount").value;
     window.travelChance = byId("travelChance").value;
+    window.sicknessDuration = byId("sicknessDuration").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -118,6 +122,8 @@ const startSimEmpty = (id) => {
     console.log(mortality);
     console.log("travelChance: ");
     console.log(travelChance);
+    console.log("sicknessDuraion: ");
+    console.log(sicknessDuration);
 
     const render = (blobs) => {
       const canvas = byId(id)
