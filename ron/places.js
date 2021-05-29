@@ -1,6 +1,6 @@
 export default{
   "hospital": {
-    "mortality": 0.3
+    "mortality": 0.3,
     "infectionRate": 1,
     "percentDistancing": 1,
     "powerDistancing": 1
