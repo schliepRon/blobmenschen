@@ -1,4 +1,4 @@
-{
+export default{
   "hospital": {
     "mortality": 0.3
   },
