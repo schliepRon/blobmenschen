@@ -100,10 +100,12 @@
 
 <div class="menu-bar-background">
     <div class="menu-bar">
-        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});"/></div>
-        <div class="menu-element"><input class="button" id="startSim2" type="button" value="Start Simulation 2" onclick="startSim({'id':'2','size':'700'});"/></div>
-        <div class="menu-element"><input class="button" id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty({'id':'3','size':'50'});"/></div>
+        <div class="menu-element"></div>
+        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});
+                                                                                                                        startSim({'id':'2','size':'700'});
+                                                                                                                        startSimEmpty({'id':'3','size':'50'});"/></div>
         <div class="menu-element"><input class="button" id="plotSim" type="button" value="Start Plot" onclick="startPlot();"/></div>
+        <div class="menu-element"></div>
 
         <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider" id="blobCount"></div>
         <div class="menu-element">InfectionRate<input type="range" min="1" max="100" value="80" class="slider" id="infectionRate"></div>
