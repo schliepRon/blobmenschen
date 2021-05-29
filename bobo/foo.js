@@ -19,12 +19,12 @@ const startSim = () => {
     const byId = id => document.getElementById(id)
     const WIDTH = 700
 
-    const infectionRate = byId("infectionRate").value;
-    const percentDistancing = byId("percentDistancing").value;
-    const powerDistancing = byId("powerDistancing").value;
-    const mortality = byId("mortality").value;
-    const infectionDistance = byId("infectionDistance").value;
-    const blobCount = byId("blobCount").value;
+    window.infectionRate = byId("infectionRate").value;
+    window.percentDistancing = byId("percentDistancing").value;
+    window.powerDistancing = byId("powerDistancing").value;
+    window.mortality = byId("mortality").value;
+    window.infectionDistance = byId("infectionDistance").value;
+    window.blobCount = byId("blobCount").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
