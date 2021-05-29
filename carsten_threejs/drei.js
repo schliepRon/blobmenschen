@@ -1018,7 +1018,7 @@ function animation( t ) {
     controls.update(dt)
 
     for (let blob of blobs) {
-        blob.step(t, 20, blobs)
+        blob.step(t, dt, blobs)
     }
 
     renderer.render( scene, camera );

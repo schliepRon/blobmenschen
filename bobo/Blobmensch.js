@@ -5,12 +5,14 @@ import { getRandomInt, eingrenzen } from "./util.js"
     const WIDTH = 700
 
 class Blobmensch {
-  constructor(x, y) {
+  constructor(x, y, id) {
     this.r = new Vec2(x, y)
     this.v = Vec2.fromPolar(0.1, Math.random() * 2 * Math.PI)
 
     this.state = "normal"
     this.distancing = getRandomInt(0,100) < percentDistancing;
+    this.homeColony = id;
+    this.currentColony = id;
   }
 
   step(t, dt, blobs) {
@@ -71,6 +73,25 @@ class Blobmensch {
 
         if (!a.zero()) {
           this.v = this.v.add(a.smul(dt)).limit(0.1)
+        }
+      }
+
+      if(getRandomInt(0, 1000000) < travelChance) {
+        if(this.currentColony == '1') {
+            const newColony = 1 + getRandomInt(1,2);
+            console.log("blob traveled from 1 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
+        } else if(this.currentColony == '2'){
+            const newColony = getRandomInt(1,2) == 1 ? 1 : 3;
+            console.log("blob traveled from 2 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
+        } else if(this.currentColony == '3'){
+            const newColony = getRandomInt(1,2);
+            console.log("blob traveled from 2 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
         }
       }
 

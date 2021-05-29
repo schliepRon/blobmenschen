@@ -15,7 +15,9 @@ const box_muller = () => {
     return [z1, z2]
 }
 
-const startSim = () => {
+const blobs = [];
+
+const startSim = (id) => {
     const byId = id => document.getElementById(id)
     const WIDTH = 700
 
@@ -25,6 +27,7 @@ const startSim = () => {
     window.mortality = byId("mortality").value;
     window.infectionDistance = byId("infectionDistance").value;
     window.blobCount = byId("blobCount").value;
+    window.travelChance = byId("travelChance").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -38,11 +41,11 @@ const startSim = () => {
     console.log(powerDistancing);
     console.log("mortality: ");
     console.log(mortality);
-
-
+    console.log("travelChance: ");
+    console.log(travelChance);
 
     const render = (blobs) => {
-      const canvas = byId("c")
+      const canvas = byId(id)
       const ctx = canvas.getContext("2d")
 
       ctx.fillStyle = "#ffffff"
@@ -56,7 +59,12 @@ const startSim = () => {
     let t0 = null
 
     const step = (t) => {
-      if (!t0) t0 = t
+      if (!t0) {
+        t0 = t
+        blobs[0].state = "infected"
+        blobs[0].infectedAt = t
+        blobs[0].distincing = false
+      }
 
       const dt = 0.9 * (t - t0)
       if (dt <= 0) {
@@ -65,31 +73,95 @@ const startSim = () => {
       }
       t0 = t
 
-      for (const blob of blobs) {
-        blob.step(t, 20, blobs)
+      const myColonyBlobs = blobs.filter(e => e.currentColony == id)
+
+      for (const blob of myColonyBlobs) {
+        blob.step(t, 20, myColonyBlobs)
       }
 
-      render(blobs)
+      render(myColonyBlobs)
 
       window.requestAnimationFrame(step)
     }
 
-    const blobs = []
     for (let i = 0; i < blobCount; i++) {
-      const b = new Blobmensch(Math.random() * (WIDTH - 100) + 50, Math.random() * (WIDTH - 100) + 50)
+      const b = new Blobmensch(Math.random() * (WIDTH - 100) + 50, Math.random() * (WIDTH - 100) + 50, id)
       blobs.push(b)
     }
 
+    window.requestAnimationFrame(step)
+}
 
-    blobs[0].state = "infected"
-    blobs[0].infectedAt = (new Date()).getTime()
-    blobs[0].distincing = false
+const startSimEmpty = (id) => {
+    const byId = id => document.getElementById(id)
+    const WIDTH = 700
+
+    window.infectionRate = byId("infectionRate").value;
+    window.percentDistancing = byId("percentDistancing").value;
+    window.powerDistancing = byId("powerDistancing").value;
+    window.mortality = byId("mortality").value;
+    window.infectionDistance = byId("infectionDistance").value;
+    window.blobCount = byId("blobCount").value;
+    window.travelChance = byId("travelChance").value;
+
+    console.log("blobCount: ");
+    console.log(blobCount);
+    console.log("infectionRate: ");
+    console.log(infectionRate);
+    console.log("infectionDistance: ");
+    console.log(infectionDistance);
+    console.log("percentDistancing: ");
+    console.log(percentDistancing);
+    console.log("powerDistancing: ");
+    console.log(powerDistancing);
+    console.log("mortality: ");
+    console.log(mortality);
+    console.log("travelChance: ");
+    console.log(travelChance);
+
+    const render = (blobs) => {
+      const canvas = byId(id)
+      const ctx = canvas.getContext("2d")
+
+      ctx.fillStyle = "#dddddd"
+      ctx.fillRect(-1, -1, WIDTH + 2, WIDTH + 2)
+
+      for (const blob of blobs) {
+        blob.draw(ctx)
+      }
+    }
+
+    let t0 = null
+
+    const step = (t) => {
+      if (!t0) {
+        t0 = t
+      }
+
+      const dt = 0.9 * (t - t0)
+      if (dt <= 0) {
+        window.requestAnimationFrame(step)
+        return
+      }
+      t0 = t
+
+      const myColonyBlobs = blobs.filter(e => e.currentColony == id)
+
+      for (const blob of myColonyBlobs) {
+        blob.step(t, 20, myColonyBlobs)
+      }
+
+      render(myColonyBlobs)
+
+      window.requestAnimationFrame(step)
+    }
 
     window.requestAnimationFrame(step)
 }
 
 const startPlot = () => {
-
+    const WIDTH = 700
 }
 
 window.startSim = startSim;
+window.startSimEmpty = startSimEmpty;
