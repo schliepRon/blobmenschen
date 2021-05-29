@@ -1,5 +1,6 @@
 import Blobmensch from "./Blobmensch.js"
 import Params from "./Params.js"
+import StatUI from "./StatUI.js"
 import CanvasRenderer from "./CanvasRenderer.js"
 import { byId } from "./util.js"
 
@@ -12,7 +13,7 @@ const startSim = (config, empty = false, color = "#ffffff") => {
 
   const params = Params.fromSliders()
   params.width = config['size'];
-  
+
   if (empty) {
     params.blobCount = 0;
   }
@@ -22,7 +23,7 @@ const startSim = (config, empty = false, color = "#ffffff") => {
   }
 
   window.colony[id] = config;
-  
+
   params.logValues()
 
   const renderer = new CanvasRenderer({
@@ -87,33 +88,8 @@ const statistics = (t) => {
   }
   t0 = t
 
-  const colony1 = blobs.filter(b => b.currentColony == '1');
-  const colony2 = blobs.filter(b => b.currentColony == '2');
-  const colony3 = blobs.filter(b => b.currentColony == '3');
-
-   var element = document.getElementById("stats_1");
-   element.innerHTML =
-   "Colony 1 -- Normal: " + colony1.filter(b => b.state == "normal").length
-   + " | Infected: " + colony1.filter(b => b.state == "infected").length
-   + " | Recovered: " + colony1.filter(b => b.state == "removed").length
-   + " | Dead: " + colony1.filter(b => b.state == "dead").length
-   + " | Count: " + colony1.length;
-
-   element = document.getElementById("stats_2");
-   element.innerHTML =
-   "Colony 2 -- Normal: " + colony2.filter(b => b.state == "normal").length
-   + " | Infected: " + colony2.filter(b => b.state == "infected").length
-   + " | Recovered: " + colony2.filter(b => b.state == "removed").length
-   + " | Dead: " + colony2.filter(b => b.state == "dead").length
-   + " | Count: " + colony2.length;
-
-   element = document.getElementById("stats_3");
-   element.innerHTML =
-   "Colony 3 -- Normal: " + colony3.filter(b => b.state == "normal").length
-   + " | Infected: " + colony3.filter(b => b.state == "infected").length
-   + " | Recovered: " + colony3.filter(b => b.state == "removed").length
-   + " | Dead: " + colony3.filter(b => b.state == "dead").length
-   + " | Count: " + colony3.length;
+  const statUI = new StatUI();
+  statUI.printStats(blobs);
 
   window.requestAnimationFrame(statistics)
 }

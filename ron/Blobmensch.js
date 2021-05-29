@@ -17,9 +17,8 @@ class Blobmensch {
   }
 
   step(t, dt, blobs) {
-
-        if(getRandomInt(0,100) < 10){
-              switch(getRandomInt(0,4)){
+    if(getRandomInt(0,100) < 10){
+          switch(getRandomInt(0,4)){
               case 0: this.currentColonie = places.home;
               break;
               case 1: this.currentColonie = places.workplace;
@@ -30,8 +29,9 @@ class Blobmensch {
               break;
               case 4: this.currentColonie = places.hospital;
               break;
-              }
           }
+    }
+
     if (this.state !== "dead") {
 
       // abstand zu rändern
