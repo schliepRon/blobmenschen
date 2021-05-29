@@ -65,6 +65,8 @@ class Blobmensch {
           this.state = "dead"
           this.v = new Vec2(0.0, 0.0)
         } else {
+          //set infectedAt for removed -> normal
+          this.infectedAt = t;
           this.state = "removed"
         }
       } else {
@@ -91,6 +93,15 @@ class Blobmensch {
             console.log("blob traveled from 2 to " + newColony);
             console.log(this);
             this.currentColony = '' + newColony;
+        }
+      }
+
+      if(this.state === "removed" && (this.infectedAt + this.params.sicknessDuration * 1000) < t) {
+        if(getRandomInt(0, 1000) < 10) {
+            this.state = "normal"
+            this.infectedAt = null
+            console.log("blob is normal again");
+            console.log(this);
         }
       }
 
