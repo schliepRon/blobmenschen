@@ -8,3 +8,5 @@ export function getRandomInt(min, max) {
 export const eingrenzen = (min, max, x) => {
   return Math.min(max, Math.max(min, x))
 }
+
+export const byId = id => document.getElementById(id)
