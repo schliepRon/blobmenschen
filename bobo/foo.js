@@ -163,5 +163,52 @@ const startPlot = () => {
     const WIDTH = 700
 }
 
+let t0 = null
+
+const statistics = (t) => {
+  if (!t0) {
+    t0 = t
+  }
+
+  const dt = 0.9 * (t - t0)
+  if (dt <= 0) {
+    window.requestAnimationFrame(statistics)
+    return
+  }
+  t0 = t
+
+  const colony1 = blobs.filter(b => b.currentColony == '1');
+  const colony2 = blobs.filter(b => b.currentColony == '2');
+  const colony3 = blobs.filter(b => b.currentColony == '3');
+
+   var element = document.getElementById("stats_1");
+   element.innerHTML =
+   "Colony 1 -- Normal: " + colony1.filter(b => b.state == "normal").length
+   + " | Infected: " + colony1.filter(b => b.state == "infected").length
+   + " | Recovered: " + colony1.filter(b => b.state == "removed").length
+   + " | Dead: " + colony1.filter(b => b.state == "dead").length
+   + " | Count: " + colony1.length;
+
+   element = document.getElementById("stats_2");
+      element.innerHTML =
+      "Colony 1 -- Normal: " + colony2.filter(b => b.state == "normal").length
+      + " | Infected: " + colony2.filter(b => b.state == "infected").length
+      + " | Recovered: " + colony2.filter(b => b.state == "removed").length
+      + " | Dead: " + colony2.filter(b => b.state == "dead").length
+      + " | Count: " + colony2.length;
+
+      element = document.getElementById("stats_3");
+         element.innerHTML =
+         "Colony 1 -- Normal: " + colony3.filter(b => b.state == "normal").length
+         + " | Infected: " + colony3.filter(b => b.state == "infected").length
+         + " | Recovered: " + colony3.filter(b => b.state == "removed").length
+         + " | Dead: " + colony3.filter(b => b.state == "dead").length
+         + " | Count: " + colony3.length;
+
+  window.requestAnimationFrame(statistics)
+}
+
+window.requestAnimationFrame(statistics)
+
 window.startSim = startSim;
 window.startSimEmpty = startSimEmpty;
