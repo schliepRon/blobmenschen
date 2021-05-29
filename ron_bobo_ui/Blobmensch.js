@@ -1,37 +1,21 @@
 import Vec2 from "./Vec2.js"
 import { getRandomInt, eingrenzen } from "./util.js"
-import places from "../ron/places.js"
 
 
     const WIDTH = 700
 
 class Blobmensch {
-  constructor(x, y) {
+  constructor(x, y, id) {
     this.r = new Vec2(x, y)
     this.v = Vec2.fromPolar(0.1, Math.random() * 2 * Math.PI)
 
     this.state = "normal"
-    this.defaultColonie = places.home;
-    this.currentColonie = places.home;
-    this.distancing = getRandomInt(0,100) < percentDistancing * this.currentColonie.percentDistancing;
+    this.distancing = getRandomInt(0,100) < percentDistancing;
+    this.homeColony = id;
+    this.currentColony = id;
   }
 
   step(t, dt, blobs) {
-    if(getRandomInt(0,100) < 10){
-          switch(getRandomInt(0,4)){
-              case 0: this.currentColonie = places.home;
-              break;
-              case 1: this.currentColonie = places.workplace;
-              break;
-              case 2: this.currentColonie = places.school;
-              break;
-              case 3: this.currentColonie = places.supermarket;
-              break;
-              case 4: this.currentColonie = places.hospital;
-              break;
-          }
-    }
-
     if (this.state !== "dead") {
 
       // abstand zu rändern
@@ -63,22 +47,22 @@ class Blobmensch {
         const d = this.r.distance(that.r)
         if (d < 70 && this.distancing) {
           const away = this.r.pointAwayFrom(that.r)
-          const distancingPower = powerDistancing * powerDistancing / 4000 * this.currentColonie.powerDistancing;
+          const distancingPower = powerDistancing * powerDistancing / 4000;
           Fx += away.x * distancingPower / (d * d)
           Fy += away.y * distancingPower / (d * d)
         }
 
         if (d < infectionDistance && this.state === "normal" && that.state === "infected") {
           // infektion?
-          if (getRandomInt(0,100) <= infectionRate * this.currentColonie.infectionRate) {
+          if (getRandomInt(0,100) <= infectionRate) {
             this.state = "infected"
             this.infectedAt = t
           }
         }
       }
 
-      if (this.state === "infected" && (this.infectedAt + 5000) < t) {
-        if (getRandomInt(0,100) <= mortality * this.currentColonie.mortality) {
+      if (this.state === "infected" && (this.infectedAt + 15000) < t) {
+        if (getRandomInt(0,100) <= mortality) {
           this.state = "dead"
           this.v = new Vec2(0.0, 0.0)
         } else {
@@ -92,11 +76,31 @@ class Blobmensch {
         }
       }
 
+      if(getRandomInt(0, 1000000) < travelChance) {
+        if(this.currentColony == '1') {
+            const newColony = 1 + getRandomInt(1,2);
+            console.log("blob traveled from 1 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
+        } else if(this.currentColony == '2'){
+            const newColony = getRandomInt(1,2) == 1 ? 1 : 3;
+            console.log("blob traveled from 2 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
+        } else if(this.currentColony == '3'){
+            const newColony = getRandomInt(1,2);
+            console.log("blob traveled from 2 to " + newColony);
+            console.log(this);
+            this.currentColony = '' + newColony;
+        }
+      }
+
       const x = eingrenzen(1, WIDTH - 1, this.r.x + dt * this.v.x)
       const y = eingrenzen(1, WIDTH - 1, this.r.y + dt * this.v.y)
       this.r = new Vec2(x, y)
     }
   }
+
 
 
   draw(ctx) {

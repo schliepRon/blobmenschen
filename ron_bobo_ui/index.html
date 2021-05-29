@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+    <style>
+        #c {
+            border: 1px solid #000;
+        }
+
+    </style>
+</head>
+
+<body>
+<script src="./foo.js" type="module"></script>
+
+<h1 id="stats_1"></h1>
+<h1 id="stats_2"></h1>
+<h1 id="stats_3"></h1>
+<canvas id="1" width="700" height="700"></canvas>
+<canvas id="2" width="700" height="700"></canvas>
+<canvas id="3" width="700" height="700"></canvas>
+<div class="stats-bar-background">
+    <div class="stats-bar">
+        <div class="stats-element">
+            <div class="stats-header" id="1_header"></div>
+            <div id="1_normal"></div>
+            <div id="1_infected"></div>
+            <div id="1_recovered"></div>
+            <div id="1_dead"></div>
+            <div id="1_count"></div>
+        </div>
+        <div class="stats-element">
+            <div class="stats-header" id="2_header"></div>
+            <div id="2_normal"></div>
+            <div id="2_infected"></div>
+            <div id="2_recovered"></div>
+            <div id="2_dead"></div>
+            <div id="2_count"></div>
+        </div>
+        <div class="stats-element">
+            <div class="stats-header" id="3_header"></div>
+            <div id="3_normal"></div>
+            <div id="3_infected"></div>
+            <div id="3_recovered"></div>
+            <div id="3_dead"></div>
+            <div id="3_count"></div>
+        </div>
+    </div>
+</div>
+
+<div class="menu-bar-background">
+    <div class="menu-bar">
+        <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider"
+                                                  id="blobCount"></div>
+        <div class="menu-element">InfectionRate<input type="range" min="1" max="100" value="80" class="slider"
+                                                      id="infectionRate"></div>
+        <div class="menu-element">InfectionDistance<input type="range" min="1" max="100" value="80" class="slider"
+                                                          id="infectionDistance"></div>
+        <div class="menu-element">PercentDistancing<input type="range" min="1" max="100" value="80" class="slider"
+                                                          id="percentDistancing"></div>
+        <div class="menu-element">PowerDistancing<input type="range" min="1" max="100" value="50" class="slider"
+                                                        id="powerDistancing"></div>
+        <div class="menu-element">Mortality<input type="range" min="1" max="100" value="10" class="slider"
+                                                  id="mortality"></div>
+        <div class="menu-element">TravelChance<input type="range" min="0" max="1000" value="10" class="slider"
+                                                     id="travelChance"></div>
+    </div>
+</div>
+<br/>
+
+<input id="startSim" type="button" value="Start Simulation" onclick="startSim('1');"/>
+<input id="startSim2" type="button" value="Start Simulation 2" onclick="startSim('2');"/>
+<input id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty('3');"/>
+<input id="plotSim" type="button" value="Start Plot" onclick="startPlot();"/>
+</body>
+-
+
+</html>

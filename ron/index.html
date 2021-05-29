@@ -17,9 +17,13 @@
 <body>
     <script src="./foo.js"  type="module"></script>
 
-    <div class="center">
-        <canvas id="c" width="700" height="700"></canvas>
-    </div>
+    <h1 id="stats_1"></h1>
+    <h1 id="stats_2"></h1>
+    <h1 id="stats_3"></h1>
+    <canvas id="1" width="700" height="700"></canvas>
+    <canvas id="2" width="700" height="700"></canvas>
+    <canvas id="3" width="700" height="700"></canvas>
+
     <div class="menu-bar">
         <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider"
                 id="blobCount"></div>
@@ -27,15 +31,19 @@
                 id="infectionRate"></div>
         <div class="menu-element">InfectionDistance<input type="range" min="1" max="100" value="80" class="slider"
                 id="infectionDistance"></div>
-        <div class="menu-element"><input class="button" id="clickMe" type="button" value="Start Simulation"
-            onclick="startSim();" /></div>
         <div class="menu-element">PercentDistancing<input type="range" min="1" max="100" value="80" class="slider"
                 id="percentDistancing"></div>
         <div class="menu-element">PowerDistancing<input type="range" min="1" max="100" value="50" class="slider"
                 id="powerDistancing"></div>
         <div class="menu-element">Mortality<input type="range" min="1" max="100" value="10" class="slider"
                 id="mortality"></div>
+        <div class="menu-element">TravelChance<input type="range" min="0" max="1000" value="10" class="slider" id="travelChance"></div>
     </div>
+
+    <input id="startSim" type="button" value="Start Simulation" onclick="startSim('1');" />
+    <input id="startSim2" type="button" value="Start Simulation 2" onclick="startSim('2');" />
+    <input id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty('3');" />
+    <input id="plotSim" type="button" value="Start Plot" onclick="startPlot();" />
 </body>-
 
 </html>
