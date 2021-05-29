@@ -19,8 +19,8 @@
 <script src="./foo.js" type="module"></script>
 <div class="canvas-container">
 
-<canvas id="1" width="700" height="700"></canvas>
-<canvas id="2" width="700" height="700"></canvas>
+<canvas id="1" width="500" height="500"></canvas>
+<canvas id="2" width="500" height="500"></canvas>
 <canvas id="3" width="200" height="200"></canvas>
 </div>
 <div class="stats-bar-background">
@@ -103,11 +103,11 @@
 <div class="menu-bar-background">
     <div class="menu-bar">
         <div class="menu-element"></div>
-        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});
-                                                                                                                        startSim({'id':'2','size':'700'});
+        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'500'});
+                                                                                                                        startSim({'id':'2','size':'500'});
                                                                                                                         startSimEmpty({'id':'3','size':'200'});
 "/></div>
-        <div class="menu-element"><input class="button" id="plotSim" type="button" value="Start Plot" onclick="startPlot();"/></div>
+        <div class="menu-element"><input class="button" id="plotSim" type="button" value="Todo: Implement" onclick="startPlot();"/></div>
         <div class="menu-element"></div>
 
         <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider" id="blobCount"></div>
