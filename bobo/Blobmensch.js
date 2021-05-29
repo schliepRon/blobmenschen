@@ -14,7 +14,7 @@ class Blobmensch {
     this.currentColony = id;
   }
 
-  step(t, dt, blobs) {
+  step(t, dt, blobs, renderer) {
     if (this.state !== "dead") {
 
       // abstand zu rändern
@@ -56,6 +56,7 @@ class Blobmensch {
           if (getRandomInt(0,100) <= this.params.infectionRate) {
             this.state = "infected"
             this.infectedAt = t
+            renderer.onStateChange(this)
           }
         }
       }
@@ -64,10 +65,12 @@ class Blobmensch {
         if (getRandomInt(0,100) <= this.params.mortality) {
           this.state = "dead"
           this.v = new Vec2(0.0, 0.0)
+          renderer.onStateChange(this)
         } else {
           //set infectedAt for removed -> normal
           this.infectedAt = t;
           this.state = "removed"
+          renderer.onStateChange(this)
         }
       } else {
         let a = (new Vec2(Fx, Fy)).limit(0.1)
@@ -100,8 +103,7 @@ class Blobmensch {
         if(getRandomInt(0, 1000) < 10) {
             this.state = "normal"
             this.infectedAt = null
-            console.log("blob is normal again");
-            console.log(this);
+            renderer.onStateChange(this)
         }
       }
 
@@ -109,15 +111,6 @@ class Blobmensch {
       const y = eingrenzen(1, this.params.width - 1, this.r.y + dt * this.v.y)
       this.r = new Vec2(x, y)
     }
-  }
-
-
-
-  draw(ctx) {
-    ctx.fillStyle = this.state === "normal" ? "#0000aa" : (this.state === "infected" ? "#990000" : (this.state === "dead" ? "#000000" : "#009900"))
-    ctx.beginPath()
-    ctx.arc(this.r.x, this.r.y, 5, 0, 2 * Math.PI)
-    ctx.fill()
   }
 }
 
