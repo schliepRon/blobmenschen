@@ -2,8 +2,6 @@ import Vec2 from "./Vec2.js"
 import { getRandomInt, eingrenzen } from "./util.js"
 
 
-    const WIDTH = 700
-
 class Blobmensch {
   constructor(x, y, id, params) {
     this.r = new Vec2(x, y)
@@ -27,8 +25,8 @@ class Blobmensch {
         let d = this.r.x
         Fx += 1.0 / (d * d)
       }
-      if (this.r.x > (WIDTH - 20)) {
-        let d = WIDTH - this.r.x
+      if (this.r.x > (this.params.width - 20)) {
+        let d = this.params.width - this.r.x
         Fx += -1.0 / (d * d)
       }
 
@@ -36,8 +34,8 @@ class Blobmensch {
         let d = this.r.y
         Fy += 1.0 / (d * d)
       }
-      if (this.r.y > (WIDTH - 20)) {
-        let d = WIDTH - this.r.y
+      if (this.r.y > (this.params.width - 20)) {
+        let d = this.params.width - this.r.y
         Fy += -1.0 / (d * d)
       }
 
@@ -96,8 +94,8 @@ class Blobmensch {
         }
       }
 
-      const x = eingrenzen(1, WIDTH - 1, this.r.x + dt * this.v.x)
-      const y = eingrenzen(1, WIDTH - 1, this.r.y + dt * this.v.y)
+      const x = eingrenzen(1, this.params.width - 1, this.r.x + dt * this.v.x)
+      const y = eingrenzen(1, this.params.width - 1, this.r.y + dt * this.v.y)
       this.r = new Vec2(x, y)
     }
   }

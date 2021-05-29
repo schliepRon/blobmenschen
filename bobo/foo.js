@@ -9,6 +9,7 @@ const startSim = (id) => {
     const WIDTH = 700
 
     const params = Params.fromSliders()
+    params.width = WIDTH;
     params.logValues()
 
 
@@ -17,7 +18,7 @@ const startSim = (id) => {
       const ctx = canvas.getContext("2d")
 
       ctx.fillStyle = "#ffffff"
-      ctx.fillRect(-1, -1, WIDTH + 2, WIDTH + 2)
+      ctx.fillRect(-1, -1, params.width + 2, params.width + 2)
 
       for (const blob of blobs) {
         blob.draw(ctx)
@@ -53,7 +54,7 @@ const startSim = (id) => {
     }
 
     for (let i = 0; i < params.blobCount; i++) {
-      const b = new Blobmensch(Math.random() * (WIDTH - 100) + 50, Math.random() * (WIDTH - 100) + 50, id, params)
+      const b = new Blobmensch(Math.random() * (params.width - 100) + 50, Math.random() * (params.width - 100) + 50, id, params)
       blobs.push(b)
     }
 
@@ -65,6 +66,7 @@ const startSimEmpty = (id) => {
     const WIDTH = 700
 
     const params = Params.fromSliders()
+    params.width = WIDTH
     params.logValues()
 
     const render = (blobs) => {
@@ -72,7 +74,7 @@ const startSimEmpty = (id) => {
       const ctx = canvas.getContext("2d")
 
       ctx.fillStyle = "#dddddd"
-      ctx.fillRect(-1, -1, WIDTH + 2, WIDTH + 2)
+      ctx.fillRect(-1, -1, params.width + 2, params.width + 2)
 
       for (const blob of blobs) {
         blob.draw(ctx)
