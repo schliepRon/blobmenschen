@@ -28,6 +28,7 @@ const startSim = (id) => {
     window.infectionDistance = byId("infectionDistance").value;
     window.blobCount = byId("blobCount").value;
     window.travelChance = byId("travelChance").value;
+    window.sicknessDuration = byId("sicknessDuration").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -43,6 +44,8 @@ const startSim = (id) => {
     console.log(mortality);
     console.log("travelChance: ");
     console.log(travelChance);
+    console.log("sicknessDuraion: ");
+    console.log(sicknessDuration);
 
     const render = (blobs) => {
       const canvas = byId(id)
@@ -103,6 +106,7 @@ const startSimEmpty = (id) => {
     window.infectionDistance = byId("infectionDistance").value;
     window.blobCount = byId("blobCount").value;
     window.travelChance = byId("travelChance").value;
+    window.sicknessDuration = byId("sicknessDuration").value;
 
     console.log("blobCount: ");
     console.log(blobCount);
@@ -118,6 +122,8 @@ const startSimEmpty = (id) => {
     console.log(mortality);
     console.log("travelChance: ");
     console.log(travelChance);
+    console.log("sicknessDuraion: ");
+    console.log(sicknessDuration);
 
     const render = (blobs) => {
       const canvas = byId(id)
@@ -189,11 +195,11 @@ const statistics = (t) => {
    var count1 = document.getElementById("1_count");
    header1.innerHTML =
    "Colony 1";
-   normal1.innerHTML = "S: " + colony1.filter(b => b.state == "normal").length;
-   infected1.innerHTML = "I: " + colony1.filter(b => b.state == "infected").length;
-   recovered1.innerHTML = "R: " + colony1.filter(b => b.state == "removed").length;
-   dead1.innerHTML = "D: " + colony1.filter(b => b.state == "dead").length;
-   count1.innerHTML = "Count: " + colony1.length;
+   normal1.innerHTML = colony1.filter(b => b.state == "normal").length;
+   infected1.innerHTML = colony1.filter(b => b.state == "infected").length;
+   recovered1.innerHTML = colony1.filter(b => b.state == "removed").length;
+   dead1.innerHTML = colony1.filter(b => b.state == "dead").length;
+   count1.innerHTML = colony1.length;
 
   var header2 = document.getElementById("2_header");
   var normal2 = document.getElementById("2_normal");
@@ -203,11 +209,11 @@ const statistics = (t) => {
   var count2 = document.getElementById("2_count");
   header2.innerHTML =
   "Colony 2";
-  normal2.innerHTML = "S: " + colony2.filter(b => b.state == "normal").length;
-  infected2.innerHTML = "I: " + colony2.filter(b => b.state == "infected").length;
-  recovered2.innerHTML = "R: " + colony2.filter(b => b.state == "removed").length;
-  dead2.innerHTML = "D: " + colony2.filter(b => b.state == "dead").length;
-  count2.innerHTML = "Count: " + colony2.length;
+  normal2.innerHTML = colony2.filter(b => b.state == "normal").length;
+  infected2.innerHTML = colony2.filter(b => b.state == "infected").length;
+  recovered2.innerHTML = colony2.filter(b => b.state == "removed").length;
+  dead2.innerHTML = colony2.filter(b => b.state == "dead").length;
+  count2.innerHTML = colony2.length;
 
   var header3 = document.getElementById("3_header");
   var normal3 = document.getElementById("3_normal");
@@ -217,11 +223,11 @@ const statistics = (t) => {
   var count3 = document.getElementById("3_count");
   header3.innerHTML =
   "Colony 3";
-  normal3.innerHTML = "S: " + colony3.filter(b => b.state == "normal").length;
-  infected3.innerHTML = "I: " + colony3.filter(b => b.state == "infected").length;
-  recovered3.innerHTML = "R: " + colony3.filter(b => b.state == "removed").length;
-  dead3.innerHTML = "D: " + colony3.filter(b => b.state == "dead").length;
-  count3.innerHTML = "Count: " + colony3.length;
+  normal3.innerHTML = colony3.filter(b => b.state == "normal").length;
+  infected3.innerHTML = colony3.filter(b => b.state == "infected").length;
+  recovered3.innerHTML =  colony3.filter(b => b.state == "removed").length;
+  dead3.innerHTML = colony3.filter(b => b.state == "dead").length;
+  count3.innerHTML = colony3.length;
 
   window.requestAnimationFrame(statistics)
 }
