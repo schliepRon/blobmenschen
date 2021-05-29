@@ -57,20 +57,21 @@ body{
     color: white;
     font-size: 20px;
     font-weight: 600;
+    padding-top: 10px;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 310px 310px 310px;
+    grid-template-rows: 240px 240px 240px;
     grid-template-areas: "stat-element";
     overflow: visible;
 }
 
 .stats-element{
     width: 95%;
-    height: 310px;
+    height: 260px;
     margin-left: 2.5%;
     display:grid;
     grid-template-columns: auto auto auto auto auto;
-    grid-template-rows: 20px 60px 500px;
+    grid-template-rows: 20px 60px 200px;
     grid-template-areas: "stats-header stats-header stats-header stats-header stats-header"
                          "normal infected recovered dead count"
                          "plot plot plot plot plot";
@@ -83,9 +84,9 @@ body{
 
 .stats-plot{
     grid-area: plot;
-    background-color: white;
     margin-top: 10px;
-    height: 200px;
+    height: 120px;
+    width: 100%;
 }
 
 .single-stat-element{

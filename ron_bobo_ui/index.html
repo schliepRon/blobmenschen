@@ -20,7 +20,7 @@
 
 <canvas id="1" width="700" height="700"></canvas>
 <canvas id="2" width="700" height="700"></canvas>
-<canvas id="3" width="700" height="700"></canvas>
+<canvas id="3" width="50" height="50"></canvas>
 <div class="stats-bar-background">
     <div class="stats-bar">
         <div class="stats-element">
@@ -45,7 +45,7 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="1_count"></div>
             </div>
-            <div class="stats-plot"></div>
+            <canvas class="stats-plot"></canvas>
         </div>
         <div class="stats-element">
             <div class="stats-header" id="2_header"></div>
@@ -69,7 +69,7 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="2_count"></div>
             </div>
-            <div class="stats-plot"></div>
+            <canvas class="stats-plot"></canvas>
         </div>
         <div class="stats-element">
             <div class="stats-header" id="3_header"></div>
@@ -93,16 +93,16 @@
                 <div class="single-stat-element-header">Count</div>
                 <div class="single-stat-element-value" id="3_count"></div>
             </div>
-            <div class="stats-plot"></div>
+            <canvas class="stats-plot"></canvas>
         </div>
     </div>
 </div>
 
 <div class="menu-bar-background">
     <div class="menu-bar">
-        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim('1');"/></div>
-        <div class="menu-element"><input class="button" id="startSim2" type="button" value="Start Simulation 2" onclick="startSim('2');"/></div>
-        <div class="menu-element"><input class="button" id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty('3');"/></div>
+        <div class="menu-element"><input class="button" id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});"/></div>
+        <div class="menu-element"><input class="button" id="startSim2" type="button" value="Start Simulation 2" onclick="startSim({'id':'2','size':'700'});"/></div>
+        <div class="menu-element"><input class="button" id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty({'id':'3','size':'50'});"/></div>
         <div class="menu-element"><input class="button" id="plotSim" type="button" value="Start Plot" onclick="startPlot();"/></div>
 
         <div class="menu-element">BlobCount<input type="range" min="1" max="100" value="80" class="slider" id="blobCount"></div>

@@ -1,39 +1,41 @@
 import Blobmensch from "./Blobmensch.js"
 import Params from "./Params.js"
 import StatUI from "./StatUI.js"
+import CanvasRenderer from "./CanvasRenderer.js"
 import { byId } from "./util.js"
 
 
 const blobs = [];
 
-const startSim = (id, empty = false, color = "#ffffff") => {
-  const WIDTH = 700
+const startSim = (config, empty = false, color = "#ffffff") => {
+  console.log(config);
+  var id = config['id'];
 
   const params = Params.fromSliders()
-  params.width = WIDTH;
+  params.width = config['size'];
 
   if (empty) {
     params.blobCount = 0;
   }
 
+  if(window.colony == null) {
+    window.colony = [];
+  }
+
+  window.colony[id] = config;
+
   params.logValues()
 
-
-  const render = (blobs) => {
-    const canvas = byId(id)
-    const ctx = canvas.getContext("2d")
-
-    ctx.fillStyle = color
-    ctx.fillRect(-1, -1, params.width + 2, params.width + 2)
-
-    for (const blob of blobs) {
-      blob.draw(ctx)
-    }
-  }
+  const renderer = new CanvasRenderer({
+    elRef: byId(id),
+    width: params.width,
+    height: params.width,
+    bgcolor: color
+  })
 
   let t0 = null
 
-  const step = (t) => {
+  const step = (t, renderer) => {
     if (!t0) {
       t0 = t
       if (!empty) {
@@ -43,22 +45,19 @@ const startSim = (id, empty = false, color = "#ffffff") => {
       }
     }
 
-    const dt = 0.9 * (t - t0)
+    const dt = (t - t0)
     if (dt <= 0) {
-      window.requestAnimationFrame(step)
-      return
+      return []
     }
     t0 = t
 
     const myColonyBlobs = blobs.filter(e => e.currentColony == id)
 
     for (const blob of myColonyBlobs) {
-      blob.step(t, 20, myColonyBlobs)
+      blob.step(t, 20, myColonyBlobs, renderer)
     }
 
-    render(myColonyBlobs)
-
-    window.requestAnimationFrame(step)
+    return myColonyBlobs
   }
 
   for (let i = 0; i < params.blobCount; i++) {
@@ -66,10 +65,10 @@ const startSim = (id, empty = false, color = "#ffffff") => {
     blobs.push(b)
   }
 
-  window.requestAnimationFrame(step)
+  renderer.run(step);
 }
 
-const startSimEmpty = (id) => startSim(id, true, "#cccccc")
+const startSimEmpty = (config) => startSim(config, true, "#cccccc")
 
 const startPlot = () => {
     const WIDTH = 700
