@@ -8,6 +8,13 @@ body{
     background-color: #292929;
     font-family: 'Segoe UI', sans-serif;
 }
+.canvas-container{
+width: 1000px;
+  display:grid;
+  grid-auto-flow: column;
+  column-gap: 10px;
+  row-gap: 10px;
+}
 .menu-bar-background{
     position: fixed;
     bottom: 0;
