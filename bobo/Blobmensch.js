@@ -17,6 +17,8 @@ class Blobmensch {
   step(t, dt, blobs, renderer) {
     if (this.state !== "dead") {
 
+    var size = window.colony[this.currentColony].size;
+
       // abstand zu rändern
       let Fx = 0.0
       let Fy = 0.0
@@ -25,8 +27,8 @@ class Blobmensch {
         let d = this.r.x
         Fx += 1.0 / (d * d)
       }
-      if (this.r.x > (this.params.width - 20)) {
-        let d = this.params.width - this.r.x
+      if (this.r.x > (size - 20)) {
+        let d = size - this.r.x
         Fx += -1.0 / (d * d)
       }
 
@@ -34,8 +36,8 @@ class Blobmensch {
         let d = this.r.y
         Fy += 1.0 / (d * d)
       }
-      if (this.r.y > (this.params.width - 20)) {
-        let d = this.params.width - this.r.y
+      if (this.r.y > (size - 20)) {
+        let d = size - this.r.y
         Fy += -1.0 / (d * d)
       }
 
@@ -97,6 +99,11 @@ class Blobmensch {
             console.log(this);
             this.currentColony = '' + newColony;
         }
+
+        size = window.colony[this.currentColony].size;
+
+        this.r.x = size / 2;
+        this.r.y = size / 2;
       }
 
       if(this.state === "removed" && (this.infectedAt + this.params.sicknessDuration * 1000) < t) {
@@ -107,8 +114,8 @@ class Blobmensch {
         }
       }
 
-      const x = eingrenzen(1, this.params.width - 1, this.r.x + dt * this.v.x)
-      const y = eingrenzen(1, this.params.width - 1, this.r.y + dt * this.v.y)
+      const x = eingrenzen(1, size - 1, this.r.x + dt * this.v.x)
+      const y = eingrenzen(1, size - 1, this.r.y + dt * this.v.y)
       this.r = new Vec2(x, y)
     }
   }

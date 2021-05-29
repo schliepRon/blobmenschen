@@ -12,7 +12,7 @@
     <h1 id="stats_3"></h1>
     <canvas id="1" width="700" height="700"></canvas>
     <canvas id="2" width="700" height="700"></canvas>
-    <canvas id="3" width="700" height="700"></canvas>
+    <canvas id="3" width="50" height="50"></canvas>
     <script src="foo.js" type="module"></script>
     </br>
     <h1>Parameter</h1>
@@ -43,9 +43,9 @@
     </br>
     </br>
     </br>
-    <input id="startSim" type="button" value="Start Simulation" onclick="startSim('1');" />
-    <input id="startSim2" type="button" value="Start Simulation 2" onclick="startSim('2');" />
-    <input id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSimEmpty('3');" />
+    <input id="startSim" type="button" value="Start Simulation" onclick="startSim({'id':'1','size':'700'});" />
+    <input id="startSim2" type="button" value="Start Simulation 2" onclick="startSim({'id':'2','size':'700'});" />
+    <input id="startSimExtra" type="button" value="Start Simulation Empty" onclick="startSim({'id':'3','size':'50'}, true, '#efefef');" />
     <input id="plotSim" type="button" value="Start Plot" onclick="startPlot();" />
   </body>
 </html>

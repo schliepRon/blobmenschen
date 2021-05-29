@@ -6,22 +6,29 @@ import { byId } from "./util.js"
 
 const blobs = [];
 
-const startSim = (id, empty = false, color = "#ffffff") => {
-  const WIDTH = 700
+const startSim = (config, empty = false, color = "#ffffff") => {
+  console.log(config);
+  var id = config['id'];
 
   const params = Params.fromSliders()
-  params.width = WIDTH;
+  params.width = config['size'];
   
   if (empty) {
     params.blobCount = 0;
   }
+
+  if(window.colony == null) {
+    window.colony = [];
+  }
+
+  window.colony[id] = config;
   
   params.logValues()
 
   const renderer = new CanvasRenderer({
     elRef: byId(id),
-    width: WIDTH,
-    height: WIDTH,
+    width: params.width,
+    height: params.width,
     bgcolor: color
   })
 
@@ -60,7 +67,7 @@ const startSim = (id, empty = false, color = "#ffffff") => {
   renderer.run(step);
 }
 
-const startSimEmpty = (id) => startSim(id, true, "#cccccc")
+const startSimEmpty = (config) => startSim(config, true, "#cccccc")
 
 const startPlot = () => {
     const WIDTH = 700
@@ -93,20 +100,20 @@ const statistics = (t) => {
    + " | Count: " + colony1.length;
 
    element = document.getElementById("stats_2");
-      element.innerHTML =
-      "Colony 1 -- Normal: " + colony2.filter(b => b.state == "normal").length
-      + " | Infected: " + colony2.filter(b => b.state == "infected").length
-      + " | Recovered: " + colony2.filter(b => b.state == "removed").length
-      + " | Dead: " + colony2.filter(b => b.state == "dead").length
-      + " | Count: " + colony2.length;
+   element.innerHTML =
+   "Colony 2 -- Normal: " + colony2.filter(b => b.state == "normal").length
+   + " | Infected: " + colony2.filter(b => b.state == "infected").length
+   + " | Recovered: " + colony2.filter(b => b.state == "removed").length
+   + " | Dead: " + colony2.filter(b => b.state == "dead").length
+   + " | Count: " + colony2.length;
 
-      element = document.getElementById("stats_3");
-         element.innerHTML =
-         "Colony 1 -- Normal: " + colony3.filter(b => b.state == "normal").length
-         + " | Infected: " + colony3.filter(b => b.state == "infected").length
-         + " | Recovered: " + colony3.filter(b => b.state == "removed").length
-         + " | Dead: " + colony3.filter(b => b.state == "dead").length
-         + " | Count: " + colony3.length;
+   element = document.getElementById("stats_3");
+   element.innerHTML =
+   "Colony 3 -- Normal: " + colony3.filter(b => b.state == "normal").length
+   + " | Infected: " + colony3.filter(b => b.state == "infected").length
+   + " | Recovered: " + colony3.filter(b => b.state == "removed").length
+   + " | Dead: " + colony3.filter(b => b.state == "dead").length
+   + " | Count: " + colony3.length;
 
   window.requestAnimationFrame(statistics)
 }
